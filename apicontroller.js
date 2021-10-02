@@ -5,7 +5,7 @@ var urlEncodedParser = express.urlencoded({extended:false});
 
 module.exports = function(app, mysql){
     
-    app.get('/person/person/:id', function(req,res){
+    app.get('/rts/rts/:id', function(req,res){
         // Hae informaatio tietokannasta, tässä tapuksesa henkilö, jonka id:n arvo = id
         // Voidan esimerkiksi palauttaa data jsonina clientille osana responsea. 
 
@@ -16,25 +16,25 @@ module.exports = function(app, mysql){
             host: "localhost",
             user: "root",
             password: "",
-            database: "person"
+            database: "rts"
         });
         con.connect();
         
         // Tehdään haku kannasta
-        con.query('SELECT id, firstname, lastname FROM person WHERE id='+req.params.id, 
+        con.query('SELECT id, name FROM rts WHERE id='+req.params.id, 
             function(err, rows){
                 
                 if(err) throw err;
-                console.log(rows[0].firstname);
+                console.log(rows[0].name);
                 // Palautetana JSONina vaikka Unityyn
-                res.json({firstname: rows[0].firstname, lastname:rows[0].lastname});
+                res.json({name: rows[0].name});
             }
         );
         // Suljetaan tietokantayhteys
         con.end();
     });
 
-    app.post('/person/person', urlEncodedParser, function(req,res){
+    app.post('/rts/rts', urlEncodedParser, function(req,res){
         console.log("Unityssä painettiin k-kirjainta. TÄmä ajetaan!");
 
 
@@ -43,11 +43,11 @@ module.exports = function(app, mysql){
             host: "localhost",
             user: "root",
             password: "",
-            database: "person" //opella node_backend
+            database: "rts"
         });
         con.connect();
 
-        var sql = "INSERT INTO person (firstname, lastname) VALUES ('"+req.body.firstname+  "','"+ req.body.lastname + "')";
+        var sql = "INSERT INTO rts (name) VALUES ('"+req.body.name+  "','" + req.body.score + "','" + req.body.waves + "')";
 
         con.query(sql, function(err, res)
         {
@@ -57,7 +57,7 @@ module.exports = function(app, mysql){
         con.end();
 
         //Kun tieto on laitetttu tietokantaan, voidaan palauttaa jotain responsena takaisin unityyn
-        res.json({firstname: req.body.firstname, lastname: req.body.lastname});
+        res.json({name: req.body.name, score: req.body.score, waves: req.body.waves});
 
     });
 
@@ -70,7 +70,7 @@ module.exports = function(app, mysql){
     });
     */
 
-    app.delete('/person/person/:id', function(req,res){
+    app.delete('/rts/rts/:id', function(req,res){
         // Tännekin tieto voi tulla jostain json muodossa. 
         // POISTA informaatio eli henkilö tietokannasta. Tässä tapuksessa henkilö jonka id:n arvo on id. 
 
