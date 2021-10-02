@@ -6,8 +6,7 @@ const port = 8000;
 
 var apicontroller = require('./apicontroller.js');
 
-var numberOfPlayers = 0;
-
+/*
 app.get('/', (req, res) =>{
 
     res.send('Hello');
@@ -16,14 +15,6 @@ app.get('/', (req, res) =>{
 
 app.get('/startGame', (req,res) =>{
 
-    // Tämä funktion lähettää Unityyn tiedon, että instansioidaan pelaaja. Ensimmäinen pelaaja on sininen, toinen punainen
-    var color;
-    if(numberOfPlayers == 0){
-        color = "blue";
-    }else{
-        color = "red";
-    }
-    
     // Luodaan instansiointia varten informaatio-objekti, jossa on kaikki oleellilnen info Unitya varten
     var instanceInfo ={
 
@@ -38,26 +29,7 @@ app.get('/startGame', (req,res) =>{
 
 
 });
-
-
-app.get('/user/:id', (req,res)=>{
-
-    console.log("Unityssa painettiin välilyöntiä");
-    var dummyData = {
-
-        "userid":req.params["id"],
-        "username": "antinTesti",
-        "someArray": [
-            {name: "attack", value:5},
-            {name: "defence", value:3},
-            {name: "health", value:20}
-        ]
-    }
-    res.json(dummyData);
-
-});
-
-
+*/
 
 apicontroller(app,mysql);
 

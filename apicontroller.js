@@ -6,11 +6,10 @@ var urlEncodedParser = express.urlencoded({extended:false});
 module.exports = function(app, mysql){
     
     app.get('/rts/rts/:id', function(req,res){
-        // Hae informaatio tietokannasta, tässä tapuksesa henkilö, jonka id:n arvo = id
-        // Voidan esimerkiksi palauttaa data jsonina clientille osana responsea. 
+        //Get highscore data by id
 
 
-        // Tehdään yhteys annetuilla parametreilla
+        // Create connection with parameters
         var con = mysql.createConnection({
 
             host: "localhost",
@@ -20,7 +19,7 @@ module.exports = function(app, mysql){
         });
         con.connect();
         
-        // Tehdään haku kannasta
+        // Query by id
         con.query('SELECT id, name, score, waves FROM rts WHERE id='+req.params.id, 
             function(err, rows){
                 
@@ -29,16 +28,16 @@ module.exports = function(app, mysql){
                 console.log(rows[0].name);
                 console.log(rows[0].score);
                 console.log(rows[0].waves);
-                // Palautetana JSONina vaikka Unityyn
+                // Palautetana returned as JSON (to Unity)
                 res.json({id: rows[0].id, name: rows[0].name, score:rows[0].score, waves:rows[0].waves});
             }
         );
-        // Suljetaan tietokantayhteys
+        // Close database connection
         con.end();
     });
 
     app.post('/rts/rts', urlEncodedParser, function(req,res){
-        console.log("Unityssä painettiin space. TÄmä ajetaan!");
+        console.log("Run request from Unity!");
 
 
         var con = mysql.createConnection({
@@ -59,11 +58,11 @@ module.exports = function(app, mysql){
         con.query(sql, function(err, res)
         {
             if(err) throw err;
-            console.log("Lisättiin uusi rivi tauluun person");
+            console.log("Inserting new entry to high scores table");
         });
         con.end();
 
-        //Kun tieto on laitetttu tietokantaan, voidaan palauttaa jotain responsena takaisin unityyn
+        //Returning data as a json response after insertion
         res.json({name: req.body.name, score: req.body.score, waves: req.body.waves});
 
     });
