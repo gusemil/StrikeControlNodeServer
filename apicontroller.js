@@ -21,15 +21,16 @@ module.exports = function(app, mysql){
         con.connect();
         
         // Tehdään haku kannasta
-        con.query('SELECT id, name FROM rts WHERE id='+req.params.id, 
+        con.query('SELECT id, name, score, waves FROM rts WHERE id='+req.params.id, 
             function(err, rows){
                 
                 if(err) throw err;
+                console.log(rows[0].id);
                 console.log(rows[0].name);
                 console.log(rows[0].score);
                 console.log(rows[0].waves);
                 // Palautetana JSONina vaikka Unityyn
-                res.json({name: rows[0].name, score:rows[0].score, waves:rows[0].waves});
+                res.json({id: rows[0].id, name: rows[0].name, score:rows[0].score, waves:rows[0].waves});
             }
         );
         // Suljetaan tietokantayhteys
@@ -50,6 +51,10 @@ module.exports = function(app, mysql){
         con.connect();
 
         var sql = "INSERT INTO rts (name, score, waves) VALUES ('"+req.body.name+  "','"+ req.body.score + "','"+ req.body.waves + "')";
+
+        console.log("Name: " + req.body.name);
+        console.log("Score: " + req.body.score);
+        console.log("Waves: " + req.body.waves);
 
         con.query(sql, function(err, res)
         {
