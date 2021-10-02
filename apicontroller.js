@@ -20,7 +20,7 @@ module.exports = function(app, mysql){
         con.connect();
         
         // Query by id
-        con.query('SELECT id, name, score, waves FROM rts WHERE id='+req.params.id, 
+        con.query('SELECT id, name, score, waves, faction FROM rts WHERE id='+req.params.id, 
             function(err, rows){
                 
                 if(err) throw err;
@@ -28,8 +28,9 @@ module.exports = function(app, mysql){
                 console.log(rows[0].name);
                 console.log(rows[0].score);
                 console.log(rows[0].waves);
+                console.log(rows[0].faction);
                 // Palautetana returned as JSON (to Unity)
-                res.json({id: rows[0].id, name: rows[0].name, score:rows[0].score, waves:rows[0].waves});
+                res.json({id: rows[0].id, name: rows[0].name, score:rows[0].score, waves:rows[0].waves, faction:rows[0].faction});
             }
         );
         // Close database connection
@@ -49,11 +50,12 @@ module.exports = function(app, mysql){
         });
         con.connect();
 
-        var sql = "INSERT INTO rts (name, score, waves) VALUES ('"+req.body.name+  "','"+ req.body.score + "','"+ req.body.waves + "')";
+        var sql = "INSERT INTO rts (name, score, waves, faction) VALUES ('"+req.body.name+  "','"+ req.body.score + "','"+ req.body.waves + "','"+ req.body.faction + "')";
 
         console.log("Name: " + req.body.name);
         console.log("Score: " + req.body.score);
         console.log("Waves: " + req.body.waves);
+        console.log("Faction: " + req.body.faction);
 
         con.query(sql, function(err, res)
         {
@@ -63,7 +65,7 @@ module.exports = function(app, mysql){
         con.end();
 
         //Returning data as a json response after insertion
-        res.json({name: req.body.name, score: req.body.score, waves: req.body.waves});
+        res.json({name: req.body.name, score: req.body.score, waves: req.body.waves, faction: req.body.faction});
 
     });
 
