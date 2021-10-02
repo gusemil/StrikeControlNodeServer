@@ -26,8 +26,10 @@ module.exports = function(app, mysql){
                 
                 if(err) throw err;
                 console.log(rows[0].name);
+                console.log(rows[0].score);
+                console.log(rows[0].waves);
                 // Palautetana JSONina vaikka Unityyn
-                res.json({name: rows[0].name});
+                res.json({name: rows[0].name, score:rows[0].score, waves:rows[0].waves});
             }
         );
         // Suljetaan tietokantayhteys
@@ -35,7 +37,7 @@ module.exports = function(app, mysql){
     });
 
     app.post('/rts/rts', urlEncodedParser, function(req,res){
-        console.log("Unityssä painettiin k-kirjainta. TÄmä ajetaan!");
+        console.log("Unityssä painettiin space. TÄmä ajetaan!");
 
 
         var con = mysql.createConnection({
@@ -47,7 +49,7 @@ module.exports = function(app, mysql){
         });
         con.connect();
 
-        var sql = "INSERT INTO rts (name) VALUES ('"+req.body.name+  "','" + req.body.score + "','" + req.body.waves + "')";
+        var sql = "INSERT INTO rts (name, score, waves) VALUES ('"+req.body.name+  "','"+ req.body.score + "','"+ req.body.waves + "')";
 
         con.query(sql, function(err, res)
         {
