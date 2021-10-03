@@ -5,12 +5,15 @@
 * Tested with XAMPP
 * 'unity_csharp_scripts' folder contains main C# scripts used in the game for reference
 
+## Game Server and Build Download
+* https://www.dropbox.com/s/v7iwp1h6hqlu3mn/StrikeControlBuild-And-NodeServer.zip?dl=0
+
 ## Instructions
 * Use rts.sql file to create a SQL database and add dummy data
 * Run server.js to start the server
 * The game has a 'How To Play' panel in the main menu that explains the game objectives and controls
 * After winning or losing a match, enter a valid name (between 1-10 characters) and click submit to send it to the server
-* You can check the top 5 games played on the server by clicking 'High Scores' in the main menu
+* You can check the top 5 highest scoring games played on the server by clicking 'High Scores' in the main menu
 * You can give up instantly by pressing '9' for debugging purposes
 
 ## Original Strike Control Info
