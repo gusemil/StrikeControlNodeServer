@@ -4,6 +4,51 @@ var jsonParser = express.json();
 var urlEncodedParser = express.urlencoded({extended:false});
 
 module.exports = function(app, mysql){
+
+    app.get('/rts/rts/', function(req,res){
+        console.log("Run a get all tables request from Unity!");
+
+        // Create connection with parameters
+        var con = mysql.createConnection({
+
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "rts"
+        });
+        con.connect();
+        
+        // Query by id
+        con.query('SELECT * FROM `rts` ORDER BY score DESC LIMIT 0, 5', 
+            function(err, rows){
+                
+                if(err) throw err;
+                console.log("ROW 0");
+                console.log(rows[0].id);
+                console.log(rows[0].name);
+                console.log(rows[0].score);
+                console.log(rows[0].waves);
+                console.log(rows[0].faction);
+                console.log("ROW 1");
+                console.log(rows[1].id);
+                console.log(rows[1].name);
+                console.log(rows[1].score);
+                console.log(rows[1].waves);
+                console.log(rows[1].faction);
+
+                console.log("ROWS");
+                console.log(rows);
+                var JsonString = JSON.stringify(rows);
+                console.log(JsonString);
+
+                //returned as JSON (to Unity)
+                res.json({rows});
+            }
+        );
+        // Close database connection
+        con.end();
+    });
+
     
     app.get('/rts/rts/:id', function(req,res){
         console.log("Run a get request from Unity!");
