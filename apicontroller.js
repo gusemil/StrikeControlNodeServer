@@ -6,8 +6,7 @@ var urlEncodedParser = express.urlencoded({extended:false});
 module.exports = function(app, mysql){
     
     app.get('/rts/rts/:id', function(req,res){
-        //Get highscore data by id
-
+        console.log("Run a get request from Unity!");
 
         // Create connection with parameters
         var con = mysql.createConnection({
@@ -29,7 +28,7 @@ module.exports = function(app, mysql){
                 console.log(rows[0].score);
                 console.log(rows[0].waves);
                 console.log(rows[0].faction);
-                // Palautetana returned as JSON (to Unity)
+                //returned as JSON (to Unity)
                 res.json({id: rows[0].id, name: rows[0].name, score:rows[0].score, waves:rows[0].waves, faction:rows[0].faction});
             }
         );
@@ -38,8 +37,7 @@ module.exports = function(app, mysql){
     });
 
     app.post('/rts/rts', urlEncodedParser, function(req,res){
-        console.log("Run request from Unity!");
-
+        console.log("Run a post request from Unity!");
 
         var con = mysql.createConnection({
 
@@ -70,17 +68,9 @@ module.exports = function(app, mysql){
     });
 
     /*
-    app.post('/api/person', jsonParser, function(req,res){
-        console.log(req.body.firstName); //firstName tai firstname?
-
-        // Tieto tulee tänne JSON muodossa. Lisätään henkilön tiedot tietokantaan
+    app.delete('/rts/rts/:id', function(req,res){
+        //delete later?
 
     });
     */
-
-    app.delete('/rts/rts/:id', function(req,res){
-        // Tännekin tieto voi tulla jostain json muodossa. 
-        // POISTA informaatio eli henkilö tietokannasta. Tässä tapuksessa henkilö jonka id:n arvo on id. 
-
-    });
 }
