@@ -8,6 +8,9 @@
 ## Game Server and Build Download
 * https://www.dropbox.com/s/v7iwp1h6hqlu3mn/StrikeControlBuild-And-NodeServer.zip?dl=0
 
+## Video Instructions and Demonstration
+* https://youtu.be/7Uip5Gz0NfE
+
 ## Instructions
 * Use rts.sql file to create a SQL database and add dummy data
 * Run server.js to start the server
